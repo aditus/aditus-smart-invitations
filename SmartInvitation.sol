@@ -1,5 +1,8 @@
 pragma solidity ^0.4.4;
 
+
+// import token contract
+
 // Work-in-progress
 contract SmartInvitation {
   // Lifespan of Smart Invitation
@@ -8,6 +11,8 @@ contract SmartInvitation {
   string invitationDescription;
   // True if Smart Invitation is still active
   bool invitationAlive;
+  
+  address owner;
   
   Participants[] public participants;
   
@@ -20,10 +25,18 @@ contract SmartInvitation {
   }
   
   function SmartInvitation(){
+    owner = msg.sender;
   
     // allows payment to smart invitation for specific user participation modes
     function() payable{
     };
+    
+    //allows owner to withdraw ETH balance back to Aditus
+    function kill(){
+      if (msg.sender == owner){
+        suicide(owner);
+      }
+    }
   }
 
 }
