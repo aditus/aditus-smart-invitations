@@ -5,14 +5,15 @@ pragma solidity ^0.4.4;
 
 // Work-in-progress
 contract SmartInvitation {
+  address public owner;
+  uint256 public participantCount;
+  
   // Lifespan of Smart Invitation
   unit constant invitationLifespan = 2 weeks;
   // Smart Invitation description
   string invitationDescription;
   // True if Smart Invitation is still active
   bool invitationAlive;
-  
-  address owner;
   
   Participants[] public participants;
   
@@ -22,6 +23,11 @@ contract SmartInvitation {
     // The reward amount that the user should get
     unit participationReward;
     
+  }
+  
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
   }
   
   function SmartInvitation(){
